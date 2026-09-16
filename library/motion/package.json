@@ -1,0 +1,17 @@
+{
+  "name": "@zz/motion",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Z&Z motion primitives. Compose from these; do not invent scroll choreography from a blank ScrollTrigger.",
+  "exports": {
+    ".": "./src/index.js",
+    "./grain.css": "./src/grain-overlay/grain.css",
+    "./treatments.css": "./src/image-treatment/treatments.css"
+  },
+  "files": ["src"],
+  "peerDependencies": {
+    "gsap": "^3.13.0",
+    "lenis": "^1.1.0"
+  }
+}

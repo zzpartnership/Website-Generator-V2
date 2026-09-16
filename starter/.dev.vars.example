@@ -1,0 +1,5 @@
+RESEND_API_KEY=
+SUPABASE_URL=
+SUPABASE_SERVICE_KEY=
+NOTIFY_EMAIL=levi@zzpartnership.com.au
+FROM_EMAIL=site@zzpartnership.com.au

@@ -1,0 +1,29 @@
+/* Clip-path shape set. Apply to an image wrapper or a block. Values are percentages so they scale. */
+.clip-wedge      { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 82%); }
+.clip-wedge-up   { clip-path: polygon(0 18%, 100% 0, 100% 100%, 0 100%); }
+.clip-blade      { clip-path: polygon(12% 0, 100% 0, 88% 100%, 0 100%); }
+.clip-blade-rev  { clip-path: polygon(0 0, 88% 0, 100% 100%, 12% 100%); }
+.clip-notch-tl   { clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%, 0 14%); }
+.clip-notch-br   { clip-path: polygon(0 0, 100% 0, 100% 86%, 86% 100%, 0 100%); }
+.clip-slab       { clip-path: polygon(0 8%, 100% 0, 100% 92%, 0 100%); }
+.clip-diamond    { clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+.clip-hex        { clip-path: polygon(25% 3%, 75% 3%, 100% 50%, 75% 97%, 25% 97%, 0 50%); }
+.clip-arch       { clip-path: path('M 0 100% L 0 45% A 50% 45% 0 0 1 100% 45% L 100% 100% Z'); }
+.clip-arch-pct   { clip-path: ellipse(50% 100% at 50% 100%); }
+.clip-pill-tall  { clip-path: inset(0 round 999px); }
+.clip-circle     { clip-path: circle(50% at 50% 50%); }
+.clip-circle-off { clip-path: circle(60% at 30% 40%); }
+.clip-tab        { clip-path: polygon(0 0, 60% 0, 66% 12%, 100% 12%, 100% 100%, 0 100%); }
+.clip-stair      { clip-path: polygon(0 0, 50% 0, 50% 33%, 100% 33%, 100% 100%, 0 100%); }
+.clip-tri-r      { clip-path: polygon(0 0, 100% 50%, 0 100%); }
+.clip-tri-up     { clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.clip-parallelo  { clip-path: polygon(20% 0, 100% 0, 80% 100%, 0 100%); }
+.clip-frame-cut  { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0, 8% 8%, 8% 92%, 92% 92%, 92% 8%, 8% 8%); }
+
+/* Corner-only radii, for shape languages that are not "one radius everywhere". */
+.r-tl { border-top-left-radius: var(--r, 999px); }
+.r-tr { border-top-right-radius: var(--r, 999px); }
+.r-bl { border-bottom-left-radius: var(--r, 999px); }
+.r-br { border-bottom-right-radius: var(--r, 999px); }
+.r-leaf { border-radius: var(--r, 40%) 0; }
+.r-leaf-rev { border-radius: 0 var(--r, 40%); }

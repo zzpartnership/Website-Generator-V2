@@ -1,0 +1,131 @@
+---
+// The pack page. One URL the client opens. Each shown variant at 375 and 1440, with a reaction form under it.
+// This page is deliberately plain so it never competes with the variants inside the frames.
+import manifest from '../../pack/manifest.json';
+import project from '../../project.json';
+
+type Variant = { name: string; slug: string; shown?: boolean };
+const variants = (manifest.variants as Variant[]).filter((v) => v.shown !== false);
+const title = project.slug === 'starter' ? 'Concept pack' : `Concept pack · ${project.slug}`;
+---
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{title}</title>
+    <style>
+      :root { color-scheme: light; }
+      * { box-sizing: border-box; }
+      html { background: #f3f2ee; color: #1b1b19; font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; font-size: 16px; line-height: 1.5; }
+      body { margin: 0; padding: 32px 16px 96px; }
+      .wrap { max-width: 1200px; margin: 0 auto; }
+      header h1 { font-size: 1.5rem; font-weight: 600; margin: 0 0 6px; letter-spacing: -0.01em; }
+      header p { margin: 0 0 32px; color: #5a5a55; max-width: 60ch; }
+      .variant { border-top: 1px solid #d8d6cf; padding: 32px 0 40px; }
+      .variant h2 { font-size: 1.25rem; font-weight: 600; margin: 0 0 4px; }
+      .variant .open { font-size: 0.875rem; color: #5a5a55; }
+      .variant .open a { color: inherit; }
+      .frames { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; margin: 20px 0 24px; }
+      @media (min-width: 900px) { .frames { grid-template-columns: 375px minmax(0, 1fr); align-items: start; } }
+      .frame { position: relative; width: 100%; overflow: hidden; background: #fff; border: 1px solid #d8d6cf; }
+      .frame iframe { position: absolute; top: 0; left: 0; border: 0; transform-origin: 0 0; background: #fff; }
+      .frame-label { font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: #5a5a55; margin: 0 0 8px; }
+      .react { display: grid; gap: 12px; max-width: 640px; }
+      .react label { display: grid; gap: 6px; font-size: 0.875rem; font-weight: 500; }
+      .react textarea { font: inherit; padding: 10px 12px; border: 1px solid #b9b7ae; background: #fff; min-height: 72px; resize: vertical; }
+      .react textarea:focus-visible { outline: 2px solid #1b1b19; outline-offset: 1px; }
+      .react button { font: inherit; font-weight: 600; padding: 10px 18px; background: #1b1b19; color: #f3f2ee; border: 0; cursor: pointer; justify-self: start; }
+      .react button:focus-visible { outline: 2px solid #1b1b19; outline-offset: 2px; }
+      .react .status { font-size: 0.875rem; color: #5a5a55; min-height: 1.5em; }
+      .react .status[data-state="error"] { color: #a33a1e; }
+      .react .status[data-state="ok"] { color: #2f6f4e; }
+      .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+      .empty { color: #5a5a55; }
+      footer { margin-top: 48px; font-size: 0.8rem; color: #5a5a55; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <h1>{title}</h1>
+        <p>Four directions for your home page. Each one is a real, working page at phone and desktop size. The words are draft and will be written properly once a direction is chosen. Under each one, tell us what pulled you in and what put you off, in your own words.</p>
+      </header>
+
+      {variants.length === 0 && <p class="empty">No variants yet.</p>}
+
+      {variants.map((v) => (
+        <section class="variant" id={v.slug}>
+          <h2>{v.name}</h2>
+          <p class="open"><a href={`/pack/${v.slug}/`} target="_blank" rel="noopener">Open {v.name} full screen</a></p>
+          <div class="frames">
+            <div>
+              <p class="frame-label">Phone</p>
+              <div class="frame" data-frame data-width="375" data-height="812">
+                <iframe src={`/pack/${v.slug}/`} title={`${v.name} at phone size`} loading="lazy" width="375" height="812"></iframe>
+              </div>
+            </div>
+            <div>
+              <p class="frame-label">Desktop</p>
+              <div class="frame" data-frame data-width="1440" data-height="900">
+                <iframe src={`/pack/${v.slug}/`} title={`${v.name} at desktop size`} loading="lazy" width="1440" height="900"></iframe>
+              </div>
+            </div>
+          </div>
+          <form class="react" data-react>
+            <input type="hidden" name="variant" value={v.name} />
+            <label>What pulled you in?<textarea name="liked" id={`liked-${v.slug}`} required></textarea></label>
+            <label>What put you off?<textarea name="disliked" id={`disliked-${v.slug}`}></textarea></label>
+            <label class="hp" aria-hidden="true">Website<input type="text" name="website" id={`website-${v.slug}`} tabindex="-1" autocomplete="off" /></label>
+            <button type="submit">Send</button>
+            <p class="status" aria-live="polite"></p>
+          </form>
+        </section>
+      ))}
+
+      <footer>Designed by <a href="https://zzpartnership.com.au">Z&amp;Z Partnership</a>. This page is private to you.</footer>
+    </div>
+
+    <script>
+      import { submit } from '../../lib/submit.js';
+
+      // Scale each frame to the width available. The iframe keeps its real viewport width.
+      const frames = document.querySelectorAll<HTMLElement>('[data-frame]');
+      const fit = () => {
+        for (const f of frames) {
+          const w = Number(f.dataset.width);
+          const h = Number(f.dataset.height);
+          const s = Math.min(1, f.clientWidth / w);
+          const iframe = f.querySelector('iframe');
+          if (iframe) iframe.style.transform = `scale(${s})`;
+          f.style.height = `${h * s}px`;
+        }
+      };
+      fit();
+      new ResizeObserver(fit).observe(document.body);
+
+      for (const form of document.querySelectorAll<HTMLFormElement>('[data-react]')) {
+        const status = form.querySelector<HTMLElement>('.status')!;
+        const button = form.querySelector<HTMLButtonElement>('button')!;
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          button.disabled = true;
+          status.dataset.state = '';
+          status.textContent = 'Sending…';
+          try {
+            await submit(form, { kind: 'reaction' });
+            status.dataset.state = 'ok';
+            status.textContent = 'Sent. Thank you.';
+            form.reset();
+          } catch (err) {
+            status.dataset.state = 'error';
+            status.textContent = `Could not send: ${(err as Error).message}. Email or call us instead.`;
+          } finally {
+            button.disabled = false;
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

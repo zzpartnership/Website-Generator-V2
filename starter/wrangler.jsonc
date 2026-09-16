@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // The @astrojs/cloudflare adapter fills in main, the ASSETS binding and the build output.
+  // Only name, dates, flags and observability belong here.
+  "name": "zz-site",
+  "compatibility_date": "2026-04-15",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true
+  }
+  // Secrets: wrangler secret put RESEND_API_KEY / SUPABASE_URL / SUPABASE_SERVICE_KEY / NOTIFY_EMAIL
+  // Local: copy .dev.vars.example to .dev.vars
+}
