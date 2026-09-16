@@ -1,0 +1,21 @@
+{
+  "enabledPlugins": {
+    "brightdata-plugin@brightdata": true,
+    "design@anthropic-marketing": true,
+    "marketing@anthropic-marketing": true,
+    "searchfit-seo@searchfit": true,
+    "llm-council@anthropic-skills": true
+  },
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "Bash(npm ci:*)",
+      "Bash(npm install:*)",
+      "Bash(node scripts/:*)",
+      "Bash(./checks/:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)"
+    ]
+  }
+}

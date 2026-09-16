@@ -1,0 +1,29 @@
+/* Grain overlay. The primitive injects the element; this file styles it. Import once.
+   The layer never exceeds its host: flicker is done by shifting the tiled background, not by moving the box. */
+.zz-grain {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: var(--zz-grain-z, 9999);
+  opacity: var(--zz-grain-opacity, 0.12);
+  mix-blend-mode: var(--zz-grain-blend, multiply);
+  background-image: var(--zz-grain-image);
+  background-size: var(--zz-grain-size, 220px) var(--zz-grain-size, 220px);
+}
+.zz-grain[data-scoped] { position: absolute; }
+.zz-grain[data-animate] { animation: zz-grain-shift 0.6s steps(6) infinite; }
+@keyframes zz-grain-shift {
+  0%   { background-position: 0 0; }
+  17%  { background-position: -37px 23px; }
+  33%  { background-position: 29px -41px; }
+  50%  { background-position: -53px -13px; }
+  67%  { background-position: 41px 37px; }
+  83%  { background-position: -11px -29px; }
+  100% { background-position: 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .zz-grain[data-animate] { animation: none; }
+}

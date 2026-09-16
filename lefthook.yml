@@ -1,0 +1,13 @@
+# Optional local mirror of CI. Install with: npx lefthook install
+# CI is the enforcement point; this only saves a round trip.
+pre-push:
+  commands:
+    hard-stops:
+      run: |
+        status=0
+        for site in projects/*/site; do
+          if [ -f "$site/package.json" ]; then
+            ./checks/all.sh "$site" || status=1
+          fi
+        done
+        exit $status

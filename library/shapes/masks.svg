@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute">
+  <!-- Reusable masks and clip paths. Include inline once, then use clip-path: url(#id). objectBoundingBox units, so they scale to the element. -->
+  <defs>
+    <clipPath id="mask-arch" clipPathUnits="objectBoundingBox">
+      <path d="M0,1 L0,0.42 C0,0.19 0.22,0 0.5,0 C0.78,0 1,0.19 1,0.42 L1,1 Z"/>
+    </clipPath>
+    <clipPath id="mask-blob-1" clipPathUnits="objectBoundingBox">
+      <path d="M0.55,0.02 C0.78,0.02 0.98,0.2 0.98,0.45 C0.98,0.72 0.8,0.98 0.52,0.98 C0.24,0.98 0.02,0.78 0.02,0.52 C0.02,0.24 0.3,0.02 0.55,0.02 Z"/>
+    </clipPath>
+    <clipPath id="mask-torn" clipPathUnits="objectBoundingBox">
+      <path d="M0,0.04 L0.08,0 L0.2,0.05 L0.31,0.01 L0.45,0.06 L0.58,0.02 L0.7,0.05 L0.83,0.01 L0.95,0.05 L1,0.02 L1,0.97 L0.9,1 L0.78,0.95 L0.64,0.99 L0.5,0.94 L0.36,0.99 L0.22,0.95 L0.1,1 L0,0.96 Z"/>
+    </clipPath>
+    <clipPath id="mask-stamp" clipPathUnits="objectBoundingBox">
+      <path d="M0.03,0 L0.97,0 L1,0.03 L1,0.97 L0.97,1 L0.03,1 L0,0.97 L0,0.03 Z M0.06,0.06 L0.06,0.94 L0.94,0.94 L0.94,0.06 Z" clip-rule="evenodd"/>
+    </clipPath>
+    <clipPath id="mask-window" clipPathUnits="objectBoundingBox">
+      <rect x="0" y="0" width="0.48" height="0.48"/>
+      <rect x="0.52" y="0" width="0.48" height="0.48"/>
+      <rect x="0" y="0.52" width="0.48" height="0.48"/>
+      <rect x="0.52" y="0.52" width="0.48" height="0.48"/>
+    </clipPath>
+    <clipPath id="mask-slash" clipPathUnits="objectBoundingBox">
+      <path d="M0.3,0 L1,0 L0.7,1 L0,1 Z"/>
+    </clipPath>
+  </defs>
+</svg>

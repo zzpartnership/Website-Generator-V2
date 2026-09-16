@@ -1,0 +1,9 @@
+{
+  "name": "zz-checks",
+  "private": true,
+  "type": "module",
+  "description": "Hard-stop checks. Objective breakage only.",
+  "dependencies": {
+    "playwright": "^1.55.0"
+  }
+}

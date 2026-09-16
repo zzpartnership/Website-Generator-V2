@@ -1,0 +1,90 @@
+/* Image treatments. CSS-only. Set the custom properties per page in tokens.css.
+   Every image on a Z&Z site carries one of these, a JS duotone, or a stated reason. */
+
+/* Duotone via CSS: greyscale + a coloured overlay. Cheaper than the SVG filter, less exact. */
+.t-duotone {
+  position: relative;
+  isolation: isolate;
+  background: var(--t-shadow, oklch(20% 0.05 260));
+}
+.t-duotone > img, .t-duotone > picture > img {
+  display: block;
+  filter: grayscale(1) contrast(var(--t-contrast, 1.15));
+  mix-blend-mode: screen;
+  opacity: 1;
+}
+.t-duotone::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--t-highlight, oklch(85% 0.12 80));
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* Halftone: crush to high contrast and lay a dot screen over it. */
+.t-halftone {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden; /* the rotated dot screen is larger than the box */
+}
+.t-halftone > img, .t-halftone > picture > img {
+  display: block;
+  filter: grayscale(1) contrast(var(--t-contrast, 2)) brightness(var(--t-brightness, 1.1));
+}
+.t-halftone::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle at center, var(--t-dot, oklch(15% 0 0)) var(--t-dot-size, 1.2px), transparent calc(var(--t-dot-size, 1.2px) + 0.6px));
+  background-size: var(--t-dot-pitch, 5px) var(--t-dot-pitch, 5px);
+  mix-blend-mode: multiply;
+  opacity: var(--t-dot-opacity, 0.85);
+  transform: rotate(var(--t-dot-angle, 15deg)) scale(1.5);
+  transform-origin: center;
+}
+
+/* Grade: a colour grade. Set --t-grade to any filter list and --t-tint to a colour wash. */
+.t-grade {
+  position: relative;
+  isolation: isolate;
+}
+.t-grade > img, .t-grade > picture > img {
+  display: block;
+  filter: var(--t-grade, contrast(1.1) saturate(0.8) sepia(0.15));
+}
+.t-grade::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--t-tint, oklch(60% 0.08 40));
+  mix-blend-mode: var(--t-tint-blend, soft-light);
+  opacity: var(--t-tint-opacity, 0.5);
+}
+
+/* Crush: aggressive crop plus scale. Pair with an aspect-ratio on the wrapper. */
+.t-crush > img, .t-crush > picture > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--t-focus, 50% 30%);
+  transform: scale(var(--t-zoom, 1.35));
+  transform-origin: var(--t-focus, 50% 30%);
+}
+.t-crush { overflow: hidden; }
+
+/* Masked: any clip-path from library/shapes/clip-paths.css */
+.t-mask > img, .t-mask > picture > img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* Grain on an image: use grainOverlay(el) or this static version. */
+.t-grain { position: relative; isolation: isolate; }
+.t-grain::after {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.4 1.1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  opacity: var(--t-grain-opacity, 0.18);
+}

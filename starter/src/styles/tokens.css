@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+/*
+  Tokens. Every variant in a pack ships its own copy of this file beside its page,
+  and the locked direction's copy replaces this one at build.
+
+  Relationship rule (the Art Director states it here, per variant):
+    e.g. "ink and paper are the same hue 70 L-points apart; the accent is ink rotated 180° in hue at 60% chroma."
+
+  Fonts: self-hosted variable files in /public/fonts, declared with @font-face below the theme.
+  Nothing here is a layout.
+*/
+
+@theme {
+  /* Colour — OKLCH. Replace per variant. */
+  --color-paper: oklch(97% 0.008 80);
+  --color-ink: oklch(18% 0.015 80);
+  --color-accent: oklch(60% 0.16 40);
+  --color-muted: oklch(55% 0.015 80);
+  --color-line: oklch(88% 0.01 80);
+
+  /* Type — families are a decision, not a default. Replace per variant. */
+  --font-display: ui-serif, Georgia, serif;
+  --font-body: ui-sans-serif, system-ui, sans-serif;
+
+  /* Fluid type scale — ratio stated per variant in rationale.md */
+  --text-xs: clamp(0.75rem, 0.7rem + 0.2vw, 0.85rem);
+  --text-sm: clamp(0.875rem, 0.82rem + 0.25vw, 1rem);
+  --text-base: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+  --text-lg: clamp(1.25rem, 1.1rem + 0.6vw, 1.6rem);
+  --text-xl: clamp(1.6rem, 1.3rem + 1.4vw, 2.4rem);
+  --text-2xl: clamp(2.2rem, 1.6rem + 2.8vw, 4rem);
+  --text-3xl: clamp(3rem, 1.8rem + 5.5vw, 7rem);
+  --text-4xl: clamp(4rem, 2rem + 9vw, 11rem);
+
+  /* Space */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+  --space-6: 4rem;
+  --space-7: 6.5rem;
+  --space-8: 10rem;
+  --space-gutter: clamp(1rem, 4vw, 3rem);
+
+  /* Shape — replace per variant. "One radius everywhere" is a banlist entry. */
+  --radius-none: 0;
+  --radius-sm: 2px;
+  --radius-lg: 1.5rem;
+  --radius-full: 999px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.83, 0, 0.17, 1);
+  --ease-snap: cubic-bezier(0.7, 0, 0.2, 1);
+  --dur-fast: 180ms;
+  --dur-base: 420ms;
+  --dur-slow: 900ms;
+}
+
+/*
+@font-face {
+  font-family: "Display";
+  src: url("/fonts/display.woff2") format("woff2");
+  font-weight: 300 900;
+  font-display: swap;
+}
+*/
+
+html {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
