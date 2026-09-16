@@ -27,7 +27,7 @@ Sixteen changes from the September 2026 review, plus four open items closed. Eac
 | C15 | `/start` command runs Intake then Strategist and creates the project folder. | 10 |
 | C16 | Static status page scheduled as the last item of Phase 4, not deferred to v2. | 11, 13 |
 
-Open items closed: GSAP licensing (free, all plugins), scraper (Bright Data), design-critique (a tool the Adversary may call), Astro 6 requirements (Node 22.12+, adapter pinned). See Part 14.
+Open items closed: GSAP licensing (free, all plugins), scraper (Bright Data), design-critique (a tool the Adversary may call), Astro version (7.3 with the Cloudflare adapter 14, verified). See Part 14.
 
 ---
 
@@ -625,9 +625,9 @@ These write to `notes/`. Nothing waits on them.
 
 | | |
 |---|---|
-| Framework | **Astro 6** (6.4.x). Requires Node 22.12 or higher. Ships Vite 7, Zod 4. Astro 7 shipped in June 2026; upgrading is a deliberate step after the loop is proven, not a default. |
+| Framework | **Astro 7** (7.3.x). Requires Node 22.12 or higher. Ships Vite 8, Zod 4. Verified building, type-checking and passing every hard stop with all five primitives on 16 September 2026. |
 | Styling | **Tailwind v4** via `@tailwindcss/vite`, CSS-first `@theme`, OKLCH tokens |
-| Hosting | **Cloudflare Workers with static assets** via `@astrojs/cloudflare` 13.x. The adapter manages the Worker entry and bindings itself; `wrangler.jsonc` holds only name, dates, flags and observability. Build output is `dist/client` (static) and `dist/server` (Worker, with a generated `wrangler.json`). Deploy is `wrangler deploy -c dist/server/wrangler.json`. The starter pins Vite 7 with an npm override because the Cloudflare and Tailwind plugins otherwise pull Vite 8 beside Astro's Vite 7 and the build fails inside workerd. |
+| Hosting | **Cloudflare Workers with static assets** via `@astrojs/cloudflare` 14.x. The adapter manages the Worker entry and bindings itself; `wrangler.jsonc` holds only name, dates, flags and observability. Build output is `dist/client` (static) and `dist/server` (Worker, with a generated `wrangler.json`). Deploy is `wrangler deploy -c dist/server/wrangler.json`. Astro 7, the adapter and the Tailwind plugin all run on Vite 8, so no version pinning is needed. |
 | Motion | GSAP + ScrollTrigger + SplitText, Lenis for smooth scroll, native CSS + View Transitions for basics |
 | Islands | Minimal. Vanilla + GSAP preferred. React only where genuinely required. |
 | Forms | One Astro API route on the Worker → Resend for email + Supabase row log. The same route takes pack reactions. |
@@ -638,9 +638,9 @@ These write to `notes/`. Nothing waits on them.
 | Connectors in | Cloudflare, Supabase, Notion, Google Drive |
 | Connectors out | Airtable, ClickUp, Canva, Wix, Twilio, Shopify, HubSpot, Figma |
 
-**Context:** Cloudflare acquired Astro in January 2026 and the core team joined; Astro 6 went stable in February 2026. The framework remains MIT-licensed. This makes Astro + Cloudflare the vendor-aligned path rather than a bet.
+**Context:** Cloudflare acquired Astro in January 2026 and the core team joined; Astro 6 went stable in March 2026 and Astro 7 in June 2026. The framework remains MIT-licensed. This makes Astro + Cloudflare the vendor-aligned path rather than a bet.
 
-**Astro 6 features this workspace uses:** Content Layer API with glob loaders · Live Content Collections (runtime, stable) · Server Islands for dynamic fragments on otherwise-static pages · native CSP support · `astro:env` for typed environment variables.
+**Astro features this workspace uses:** Content Layer API with glob loaders · Live Content Collections (runtime, stable) · Server Islands for dynamic fragments on otherwise-static pages · native CSP support · `astro:env` for typed environment variables.
 
 **Type:** free variable fonts (Fontshare, Google variable) for now. Licensed type is a genuine quality lever but is deferred until layout, motion and treatment are consistently good.
 
@@ -758,7 +758,7 @@ Generate this exactly. The repo root is the workspace.
 │   ├── names.md                  client-facing name pool             [C12]
 │   └── shipped.md                one line per launched site          [C14]
 │
-├── starter/                      Minimal Astro 6 project
+├── starter/                      Minimal Astro 7 project
 │   ├── package.json
 │   ├── astro.config.mjs
 │   ├── wrangler.jsonc
@@ -816,7 +816,7 @@ Do not build everything at once.
 **Phase 1 — foundations**
 1. `banlist.md` — write it, then validate both ways: three sites Levi considers AI-looking must each score 3+, three sites he admires must each score under 2. **[C8]**
 2. Five motion primitives: mask-wipe, split-text, sticky pin, grain overlay, image treatment
-3. Minimal Astro 6 starter — tokens, primitives, config, pack page, submit route, no layouts
+3. Minimal Astro starter — tokens, primitives, config, pack page, submit route, no layouts
 4. Hard-stop check scripts and the CI workflow
 
 **Phase 2 — prove the core loop**
@@ -889,11 +889,10 @@ The reasoning is Rory Sutherland's: the pain in web projects is low visibility, 
 2. **Which scraper** — **closed.** `brightdata-plugin:scrape`. The Art Director already depends on Bright Data for design-mirror. One vendor, one auth.
 3. **design-critique versus the Adversary** — **closed.** The Adversary stays the role with its one-sided brief. The skill is a tool it may call for a layout pass. Its habit of noting what works does not leak into the agent file.
 4. **Concept pack economics** — **watch, as written.** Parallel generation from a shared starter means a variant costs tokens and minutes, not front-end hours. The number that breaks first is Levi's review time on six, which showing four halves.
-5. **Astro 6 Cloudflare adapter** — verified building with `@astrojs/cloudflare` 13.7 on Astro 6.4.8. If a build fails with `require_dist is not a function` inside a runner worker, two Vite majors are in the tree; the starter's `overrides` pin fixes it.
-6. **Astro 7** — released June 2026. Not adopted. Revisit after Phase 2.
+5. **Astro version** — **closed.** Astro 7.3 with `@astrojs/cloudflare` 14.3, verified end to end. If a build ever fails with `require_dist is not a function` inside a runner worker, two Vite majors are in the tree; `npm ls vite` shows it, and a single `overrides` entry for `vite` in the site's `package.json` fixes it. Astro 6 needed that pin; Astro 7 does not.
 
 ---
 
 # PART 15 — THE ONE-PARAGRAPH SUMMARY
 
-A six-role workspace that turns client discovery material into a code-built Astro site. Its distinguishing mechanism is a concept pack of six genuinely different home pages built in parallel at escalating constraint levels, at both phone and desktop widths, pruned to four and presented to the client on one page as real pixels so vague design language becomes pointable feedback. Quality is protected by a concrete banlist of AI-tells that flags rather than forbids, and by an adversarial critic whose only job is to argue the work is forgettable. Correctness is a binary gate limited to objective breakage, enforced in CI; everything else is an advisory note. The system never blocks its operator, never tells him something is out of scope, and never accumulates aesthetic rules — because the previous version did all three and that is why it had to be rebuilt.
+A six-role workspace that turns client discovery material into a code-built Astro 7 site on Cloudflare. Its distinguishing mechanism is a concept pack of six genuinely different home pages built in parallel at escalating constraint levels, at both phone and desktop widths, pruned to four and presented to the client on one page as real pixels so vague design language becomes pointable feedback. Quality is protected by a concrete banlist of AI-tells that flags rather than forbids, and by an adversarial critic whose only job is to argue the work is forgettable. Correctness is a binary gate limited to objective breakage, enforced in CI; everything else is an advisory note. The system never blocks its operator, never tells him something is out of scope, and never accumulates aesthetic rules — because the previous version did all three and that is why it had to be rebuilt.

@@ -6,6 +6,8 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   // Static by default. Routes that opt out with `export const prerender = false` run on the Worker.
   output: 'static',
+  // No sessions. Without this the adapter adds a SESSION KV binding the Worker never uses and a first deploy has to provision.
+  session: false,
   adapter: cloudflare({
     // Optimise images at build time. No Cloudflare Images binding required.
     imageService: 'compile',

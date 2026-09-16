@@ -1,5 +1,7 @@
 # Starter
 
+Astro 7 on Cloudflare Workers with static assets.
+
 Tokens, config, the pack page, the submit route, an empty home page. No layouts. No sections. `scripts/new-project.sh` copies this into `projects/<client>/site/`.
 
 - `src/styles/tokens.css` — `@theme` with OKLCH tokens. Each pack variant carries its own copy.

@@ -4,6 +4,10 @@ Turns client discovery material into a code-built Astro site. Owned by Z&Z Partn
 
 The full specification is `MANUAL.md`. The philosophy that overrides it is `PHILOSOPHY.md`. Read Part 12 of the manual before changing anything about how the workspace behaves.
 
+## First time on a machine
+
+Follow `SETUP.md` once, then run `scripts/doctor.sh`. It checks Node, Chrome, Wrangler login and the secrets, and says exactly what is missing.
+
 ## How a session starts
 
 1. Open this repo in VS Code with Claude Code.

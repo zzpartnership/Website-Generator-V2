@@ -3,9 +3,9 @@
 Spec: MANUAL.md. Philosophy: PHILOSOPHY.md (overrides everything). Do not add aesthetic rules to this file.
 
 ## Stack
-- Astro 6 (Node >= 22.12), Tailwind v4 via @tailwindcss/vite, tokens in src/styles/tokens.css as @theme with OKLCH
-- Cloudflare Workers with static assets via @astrojs/cloudflare 13. Build writes dist/client (static) + dist/server (Worker). Deploy: npm run deploy (wrangler -c dist/server/wrangler.json)
-- Vite is pinned to 7 in each site's package.json overrides. Do not remove the pin; two Vite majors break the Cloudflare build
+- Astro 7 (Node >= 22.12), Tailwind v4 via @tailwindcss/vite, tokens in src/styles/tokens.css as @theme with OKLCH
+- Cloudflare Workers with static assets via @astrojs/cloudflare 14. Build writes dist/client (static) + dist/server (Worker). Deploy: npm run deploy (wrangler -c dist/server/wrangler.json)
+- One-time machine setup and go-live steps: SETUP.md. Preflight: scripts/doctor.sh
 - GSAP + ScrollTrigger + SplitText (all free), Lenis. Primitives in library/motion, imported as @zz/motion
 - Forms and pack reactions: src/pages/api/submit.ts on the Worker -> Resend + Supabase
 - Secrets via astro:env: RESEND_API_KEY, SUPABASE_URL, SUPABASE_SERVICE_KEY, NOTIFY_EMAIL
